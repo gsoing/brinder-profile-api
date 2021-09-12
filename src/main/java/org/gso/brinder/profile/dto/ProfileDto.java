@@ -29,4 +29,11 @@ public class ProfileDto {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private LocalDateTime modified;
+
+    public ProfileModel toModel() {
+        return ProfileModel.builder()
+                .id(this.id)
+                .userId(this.userId)
+                .build();
+    }
 }

@@ -1,10 +1,9 @@
 package org.gso.brinder.profile.service;
 
 import lombok.RequiredArgsConstructor;
+import org.gso.brinder.common.exception.NotFoundException;
 import org.gso.brinder.profile.model.ProfileModel;
 import org.gso.brinder.profile.repository.ProfileRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,13 +12,18 @@ public class ProfileService {
 
     private final ProfileRepository profileRepository;
 
-    public ProfileModel createUser(ProfileModel userModel) {
+    public ProfileModel createProfile(ProfileModel userModel) {
         return profileRepository.save(userModel);
     }
 
-    public Page<ProfileModel> getAllUsers(Pageable pageable) {
-        return profileRepository.findAll(pageable);
+    public ProfileModel getProfile(String profileId) {
+        return profileRepository.findById(profileId).orElseThrow(() -> NotFoundException.DEFAULT);
     }
 
-    public ProfileModel findUserByMail(String mail) { return profileRepository.findByMail(mail); }
+    public ProfileModel updateProfile(ProfileModel profileToUpdate) {
+        ProfileModel profileModel = this.getProfile(profileToUpdate.getId());
+        profileModel.setUserId(profileToUpdate.getUserId());
+        return profileRepository.save(profileModel);
+    }
+
 }
