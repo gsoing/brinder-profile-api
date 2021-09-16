@@ -2,6 +2,7 @@ package org.gso.brinder.profile.dto;
 
 import java.time.LocalDateTime;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,7 +23,14 @@ import org.gso.brinder.profile.model.ProfileModel;
 public class ProfileDto {
 
     private String id;
+    @NotEmpty
     private String userId;
+    @Email
+    private String mail;
+    @Min(13)
+    private int age;
+    private String firstName;
+    private String lastName;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = "YYYY-MM-DD HH:mm:ss")
     private LocalDateTime created;
@@ -34,6 +42,9 @@ public class ProfileDto {
         return ProfileModel.builder()
                 .id(this.id)
                 .userId(this.userId)
+                .age(this.age)
+                .firstName(this.firstName)
+                .lastName(this.lastName)
                 .build();
     }
 }

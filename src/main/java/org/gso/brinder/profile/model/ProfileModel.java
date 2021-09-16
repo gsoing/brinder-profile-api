@@ -2,6 +2,9 @@ package org.gso.brinder.profile.model;
 
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +25,11 @@ public class ProfileModel {
     @Id
     private String id;
     private String userId;
+    @Email
+    private String mail;
+    private int age;
+    private String firstName;
+    private String lastName;
     @CreatedDate
     private LocalDateTime created;
     @LastModifiedDate
@@ -31,6 +39,10 @@ public class ProfileModel {
         return ProfileDto.builder()
                 .id(this.id)
                 .userId(this.userId)
+                .mail(this.mail)
+                .age(this.age)
+                .firstName(this.firstName)
+                .lastName(this.lastName)
                 .created(this.created)
                 .modified(this.modified)
                 .build();
